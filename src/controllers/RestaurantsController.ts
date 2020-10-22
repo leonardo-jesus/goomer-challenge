@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
+const isEmpty = require('lodash.isempty');
 
 import * as Yup from 'yup';
 
@@ -91,10 +92,7 @@ export default {
 
     const restaurantsRepository = getRepository(Restaurant);
     const imagesRestaurantRepository = getRepository(ImageRestaurant);
-    const restaurant = await restaurantsRepository.findOneOrFail(id, {
-      relations: ['images']
-    });
-
+    
     const reqImages = req.files as Express.Multer.File[];
 
     const images = reqImages.map(image => {
@@ -120,9 +118,11 @@ export default {
       });
     });
 
-    await restaurantsRepository.update(id, updatedRestaurant);
+    if (!Object.values(data).every(isEmpty)) {
+      await restaurantsRepository.update(id, updatedRestaurant);
+    };
 
-    if (images) {
+    if (!isEmpty(images)) {
       await imagesRestaurantRepository.delete({
         restaurant: {
           id: Number(id)
@@ -131,6 +131,10 @@ export default {
 
       await imagesRestaurantRepository.save(updatedImagesRestaurant);
     }
+
+    const restaurant = await restaurantsRepository.findOneOrFail(id, {
+      relations: ['images']
+    });
 
     return res.status(200).json(restaurant);
   },
