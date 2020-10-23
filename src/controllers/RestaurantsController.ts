@@ -152,10 +152,11 @@ export default {
   },
 
   async createProduct(req: Request, res: Response) {
-    // const { id } = req.params;
+    const { id } = req.params;
 
     const productsRepository = getRepository(Product);
-    // const restaurant = await restaurantsRepository.findOne(id);
+    const restaurantsRepository = getRepository(Restaurant);
+    const restaurant = await restaurantsRepository.findOne(id);
 
     const {
       name,
