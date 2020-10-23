@@ -6,13 +6,14 @@ import RestaurantsController from './controllers/RestaurantsController';
 const routes = Router();
 const upload = multer(uploadConfig);
 
-routes.get('/restaurants', RestaurantsController.index);
-routes.get('/restaurants/:id', RestaurantsController.show);
+routes.get('/restaurants', RestaurantsController.indexRestaurant);
+routes.get('/restaurants/:id', RestaurantsController.showRestaurant);
 
-routes.post('/restaurants', upload.array('images'), RestaurantsController.create);
+routes.post('/restaurants', upload.array('imagesRestaurant'), RestaurantsController.createRestaurant);
+// routes.post('/restaurants/:id/products', upload.array('imagesProduct'), RestaurantsController.createProduct)
 
-routes.patch('/restaurants/:id', upload.array('images'), RestaurantsController.update);
+routes.patch('/restaurants/:id', upload.array('imagesRestaurant'), RestaurantsController.updateRestaurant);
 
-routes.delete('/restaurants/:id', RestaurantsController.delete);
+routes.delete('/restaurants/:id', RestaurantsController.deleteRestaurant);
 
 export default routes;
