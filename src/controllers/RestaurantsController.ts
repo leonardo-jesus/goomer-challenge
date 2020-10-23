@@ -5,32 +5,32 @@ const isEmpty = require('lodash.isempty');
 import * as Yup from 'yup';
 
 import Restaurant from '../models/Restaurant';
-import ImageRestaurant from '../models/ImageRestaurant';
+import ImagesRestaurant from '../models/ImagesRestaurant';
 
 export default {
-  async index(req: Request, res: Response) {
+  async indexRestaurant(req: Request, res: Response) {
     const restaurantsRepository = getRepository(Restaurant);
 
     const restaurants = await restaurantsRepository.find({
-      relations: ['images']
+      relations: ['imagesRestaurant']
     });
 
     return res.json(restaurants);
   },
 
-  async show(req: Request, res: Response) {
+  async showRestaurant(req: Request, res: Response) {
     const { id } = req.params;
 
     const restaurantsRepository = getRepository(Restaurant);
 
     const restaurant = await restaurantsRepository.findOneOrFail(id, {
-      relations: ['images']
+      relations: ['imagesRestaurant']
     });
 
     return res.json(restaurant);
   },
 
-  async create(req: Request, res: Response) {
+  async createRestaurant(req: Request, res: Response) {
     const {
       name,
       longitude,
@@ -42,7 +42,7 @@ export default {
     const restaurantsRepository = getRepository(Restaurant);
 
     const reqImages = req.files as Express.Multer.File[];
-    const images = reqImages.map(image => {
+    const imagesRestaurant = reqImages.map(image => {
       return { path: image.filename }
     });
 
@@ -52,7 +52,7 @@ export default {
       latitude,
       about,
       opening_hours,
-      images
+      imagesRestaurant
     };
 
     const schema = Yup.object().shape({
@@ -61,7 +61,7 @@ export default {
       longitude: Yup.number().required(),
       about: Yup.string().required().max(300),
       opening_hours: Yup.string().required(),
-      images: Yup.array(
+      imagesRestaurant: Yup.array(
         Yup.object().shape({
           path: Yup.string().required()
         })
@@ -79,7 +79,7 @@ export default {
     return res.status(201).json(restaurant);
   },
 
-  async update(req: Request, res: Response) {
+  async updateRestaurant(req: Request, res: Response) {
     let {
       name,
       longitude,
@@ -91,11 +91,11 @@ export default {
     const { id } = req.params;
 
     const restaurantsRepository = getRepository(Restaurant);
-    const imagesRestaurantRepository = getRepository(ImageRestaurant);
+    const imagesRestaurantRepository = getRepository(ImagesRestaurant);
     
     const reqImages = req.files as Express.Multer.File[];
 
-    const images = reqImages.map(image => {
+    const imagesRestaurant = reqImages.map(image => {
       return { path: image.filename }
     });
 
@@ -109,7 +109,7 @@ export default {
 
     const updatedRestaurant = restaurantsRepository.create(data);
 
-    const updatedImagesRestaurant = images.map(image => {
+    const updatedImagesRestaurant = imagesRestaurant.map(image => {
       return imagesRestaurantRepository.create({
         path: image.path,
         restaurant: {
@@ -122,7 +122,7 @@ export default {
       await restaurantsRepository.update(id, updatedRestaurant);
     };
 
-    if (!isEmpty(images)) {
+    if (!isEmpty(imagesRestaurant)) {
       await imagesRestaurantRepository.delete({
         restaurant: {
           id: Number(id)
@@ -133,13 +133,13 @@ export default {
     }
 
     const restaurant = await restaurantsRepository.findOneOrFail(id, {
-      relations: ['images']
+      relations: ['imagesRestaurant']
     });
 
     return res.status(200).json(restaurant);
   },
 
-  async delete(req: Request, res: Response) {
+  async deleteRestaurant(req: Request, res: Response) {
     const { id } = req.params;
 
     const restaurantsRepository = getRepository(Restaurant);
@@ -148,5 +148,7 @@ export default {
     await restaurantsRepository.delete(id);
 
     return res.status(200).json(restaurant);
-  }
+  },
+
+
 };
