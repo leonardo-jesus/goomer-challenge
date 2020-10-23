@@ -20,13 +20,13 @@ export default class Product {
   offer: boolean;
 
   @Column()
-  offer_description: string;
+  offer_description?: string;
 
   @Column()
-  offer_price: number;
+  offer_price?: number;
 
   @Column()
-  offer_length: string;
+  offer_length?: string;
 
   @ManyToOne(() => Restaurant, restaurant => restaurant.products, {
     cascade: ['insert', 'update']
