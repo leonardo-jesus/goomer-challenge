@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import Restaurant from './Restaurant';
-import ImageProduct from './ImageProduct';
+import ImageProduct from './ImagesProduct';
 
 @Entity('products')
 export default class Product {
