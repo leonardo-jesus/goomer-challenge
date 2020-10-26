@@ -1,6 +1,6 @@
 
 <p align="center">
-	<h1 align="center">Goomer Challenge :hamburger: :tm:</h1>
+	<h1 align="center">Goomer Challenge :hamburger::pizza:</h1>
 </p>
 
 <p align="center">
