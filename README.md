@@ -36,6 +36,7 @@ The ***Goomer Challenge***,  is a Project that **use NodeJS and Typescript**, wh
 - Open the project on your terminal;
 - Run `npm i` to install Dependencies;
 - Run `npm run dev` to run the server.&nbsp;
+&nbsp;
 PS.: By default the server will run at `localhost:3000`.
 
 ## 🤔 How to contribute
