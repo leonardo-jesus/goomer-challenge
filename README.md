@@ -29,7 +29,7 @@ This project was developed with the following technologies:
 
 ## 💻 Project
 
-The ***Goomer Challenge***,  is a Project that **use NodeJS and Typescript**, where you can register or see restaurants. Made with **Typescript**, **NodeJS**, **TypeORM** and **JSX**.
+The ***Goomer Challenge***,  is a Project that **use NodeJS and Typescript**, where you can register or see restaurants. Made with **Typescript**, **NodeJS**, **TypeORM** and **SQLite**.
 
 ## 🏃 How to Run
 - Make a fork;
